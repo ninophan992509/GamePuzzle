@@ -1,0 +1,89 @@
+﻿<Window x:Class="Puzzle.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        xmlns:VM="clr-namespace:Puzzle"       
+        Title="Puzzle" Height="510" Width="900" Background="DeepSkyBlue"  ResizeMode="NoResize">
+
+    <Window.DataContext>
+        <VM:Display/>
+    </Window.DataContext>
+    <Window.Resources>
+       
+        <Style x:Key="StyleButton" TargetType="Button">
+            <Setter Property="Background" Value="DeepSkyBlue"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="Snow"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="MinWidth" Value="74"/>
+            <Setter Property="MinHeight" Value="30"/>
+            <Setter Property="Template">
+
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                CornerRadius="5"
+                                BorderThickness="2"
+                                Padding="5"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+    </Window.Resources>
+
+
+    <Canvas x:Name="MainScreen"   >
+        <Canvas x:Name="PuzzleBox"  Canvas.Left="20" Canvas.Top="20" Width="440" Height="440"  >
+            <Rectangle x:Name="RectangleImage"
+            Stroke="DodgerBlue" Width="440" Height="440" StrokeThickness="10"
+                    Opacity="1" Fill="White">
+            </Rectangle>
+
+        </Canvas>
+
+
+        <Image x:Name="ImageDisplay" Canvas.Top="25" Canvas.Right="50"  Width="320" Height="320" 
+             Source="{Binding Path=PuzzleImage }"/>
+
+        <Label Content="Time:" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="525" Canvas.Top="350" />
+        <Label x:Name="TimeCountdown"  FontSize="25" FontWeight="DemiBold" 
+                FontFamily="Consolas"  Padding="10" Canvas.Right="160" Canvas.Bottom="115" Canvas.Left="611" Canvas.Top="340"/>
+        <Label Content="Level:" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="525" Canvas.Top="380" RenderTransformOrigin="0.271,0.564" />
+        <ComboBox x:Name="Level" Width="108" Height="22" Canvas.Right="160" Canvas.Bottom="40" Canvas.Left="567" Canvas.Top="381"  
+                  SelectionChanged="Level_SelectionChanged"  
+                  ItemsSource="{Binding Path=Levels}"
+                  DisplayMemberPath="Name"
+                  SelectedItem="{Binding Path=SLevel}"        
+                 >
+           
+        </ComboBox>
+
+        <StackPanel Orientation="Horizontal" Canvas.Right="5" Canvas.Bottom="30">
+            <Button x:Name="Shuffle" Content="Shuffle"                  
+                     Style="{StaticResource StyleButton}" Margin="5,0,5,0" Click="Shuffle_Click"/>
+            <Button x:Name="NewGame" Content="New Game"
+                     Style="{StaticResource StyleButton}" Margin="5,0,5,0" Click="NewGame_Click"/>
+            <Button x:Name="SaveGame" Content="Save Game"
+                     Style="{StaticResource StyleButton}" Margin="5,0,5,0" Click="SaveGame_Click"/>
+            <Button x:Name="LoadGame" Content="LoadGame" 
+                     Style="{StaticResource StyleButton}" Margin="5,0,5,0" Click="LoadGame_Click"/>
+            <Button x:Name="Quit" Content="Quit" 
+                     Style="{StaticResource StyleButton}" Margin="5,0,5,0" Click="Quit_Click"/>
+
+        </StackPanel>
+    </Canvas>
+</Window>
